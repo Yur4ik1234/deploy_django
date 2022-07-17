@@ -1,0 +1,21 @@
+server {
+    listen 80;
+    server_name {{ host }};
+
+    location /static {
+        alias /home/{{ ansible_user }}/sites/{{ host }}/staticc;
+    }
+
+    location /media {
+        alias /home/{{ ansible_user }}/sites/{{ host }}/media;
+    }
+
+    location / {
+        proxy_pass http://unix:/tmp/{{ host }}.socket;
+        proxy_set_header Host $host;
+    }
+}
+
+
+
+
